@@ -1,0 +1,27 @@
+{
+  "name": "khushi-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Khushi Modi's portfolio: a hand-drawn, animated personal site built with Next.js, React and TypeScript.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource/familjen-grotesk": "5.3.0",
+    "@fontsource/geist-mono": "5.3.0",
+    "@fontsource/geist-sans": "5.3.0",
+    "@fontsource/homemade-apple": "5.3.0",
+    "next": "16.4.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "5.9.3"
+  }
+}

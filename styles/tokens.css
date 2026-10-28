@@ -1,0 +1,97 @@
+/*
+  Design tokens. Every colour on the site comes from here, so light and dark
+  themes stay consistent. The doodle palette (--c-*) is used by both the
+  canvas drawings (read at runtime) and the SVG marks (via var()).
+*/
+:root {
+  --paper: #f6f6fa;
+  --ink: #17161f;
+  --muted: #5e5c70;
+  --pen: #2b44c9;
+  --line: #dddce8;
+  --chip: rgba(255, 255, 255, 0.74);
+  --shadow: rgba(20, 19, 40, 0.22);
+
+  --c-blue: #2b44c9;
+  --c-coral: #e5533d;
+  --c-sun: #e0a100;
+  --c-green: #179467;
+  --c-violet: #7a4bd8;
+  --c-orange: #ee7a1c;
+  --c-pink: #de4f8c;
+  --c-teal: #0e92a4;
+
+  /* Indian Railways station boards are yellow with black lettering in both themes */
+  --board: #f3c300;
+  --board-ink: #111111;
+  --sleeper: #cdc9d8;
+
+  /* notepad paper for the skills sheet */
+  --sheet: #fffdf7;
+  --rule: rgba(43, 68, 201, 0.13);
+
+  /* the fountain pen */
+  --barrel: #1d2a6e;
+  --grip: #15151d;
+  --band: #c8a24c;
+  --nib: #cfcbdb;
+
+  --display: 'Familjen Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Geist Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --hand: 'Homemade Apple', 'Segoe Script', 'Bradley Hand', cursive;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #0e0e14;
+    --ink: #ecebf4;
+    --muted: #a09eb5;
+    --pen: #9db0ff;
+    --line: #2a2937;
+    --chip: rgba(23, 22, 31, 0.72);
+    --shadow: rgba(0, 0, 0, 0.55);
+    --c-blue: #9db0ff;
+    --c-coral: #ff8b74;
+    --c-sun: #ffd257;
+    --c-green: #52d3a1;
+    --c-violet: #b597ff;
+    --c-orange: #ffa65e;
+    --c-pink: #ff8bbb;
+    --c-teal: #62d5e5;
+    --sleeper: #3a3946;
+    --sheet: #1b1a25;
+    --rule: rgba(157, 176, 255, 0.14);
+    --barrel: #3a4ba8;
+    --grip: #2a2a35;
+    --band: #d9b65e;
+    --nib: #d8d5e4;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --paper: #0e0e14;
+  --ink: #ecebf4;
+  --muted: #a09eb5;
+  --pen: #9db0ff;
+  --line: #2a2937;
+  --chip: rgba(23, 22, 31, 0.72);
+  --shadow: rgba(0, 0, 0, 0.55);
+  --c-blue: #9db0ff;
+  --c-coral: #ff8b74;
+  --c-sun: #ffd257;
+  --c-green: #52d3a1;
+  --c-violet: #b597ff;
+  --c-orange: #ffa65e;
+  --c-pink: #ff8bbb;
+  --c-teal: #62d5e5;
+  --sleeper: #3a3946;
+  --sheet: #1b1a25;
+  --rule: rgba(157, 176, 255, 0.14);
+  --barrel: #3a4ba8;
+  --grip: #2a2a35;
+  --band: #d9b65e;
+  --nib: #d8d5e4;
+  color-scheme: dark;
+}

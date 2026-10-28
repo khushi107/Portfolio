@@ -1,0 +1,69 @@
+/* The "hello in twelve languages" curtain that lifts with a curved edge. */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--paper);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  will-change: transform;
+}
+.curtain .curve {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 0;
+  width: 100%;
+  height: 20vh;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 16px 22px var(--shadow));
+}
+.curtain .curve path {
+  fill: var(--paper);
+}
+.hello {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(42px, 7vw, 80px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  padding-inline: 24px;
+}
+.hello::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--pen);
+  flex: none;
+}
+/* each greeting remounts (React key) and plays this quick entrance */
+.hello span {
+  animation: hello-in 0.12s ease-out;
+}
+@keyframes hello-in {
+  from {
+    opacity: 0.25;
+    transform: translateY(6px);
+  }
+}
+.hello-meta {
+  position: absolute;
+  left: max(24px, env(safe-area-inset-left, 0px));
+  right: max(24px, env(safe-area-inset-right, 0px));
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font: 400 12px var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}

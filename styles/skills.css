@@ -1,0 +1,273 @@
+/*
+ * Skills: big folders in rows of 3, 3 and 2. The open folder's sheet rises
+ * straight up out of it, over the folders above.
+ *
+ * Layering (all in the .cabinet stacking context):
+ *   folder backs (z 1)  <  other folder fronts (z 3)  <  sheet slot (z 4)  <  the sheet's own folder front (z 5)
+ * so the sheet covers the folders above but still looks like it comes out of its own folder.
+ */
+.cabinet {
+  --folder-h: clamp(124px, 11.5vw, 160px);
+  position: relative;
+  z-index: 0;
+  margin-top: 28px;
+  /* room above the top row for its sheets */
+  padding-top: 190px;
+}
+
+/* shown in the empty space above the folders while they are all closed */
+.cabinet-hint {
+  position: absolute;
+  top: 96px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  font-family: var(--hand);
+  font-size: clamp(18px, 1.8vw, 24px);
+  color: var(--muted);
+  transform: rotate(-2deg);
+  transition: opacity 0.3s ease;
+}
+.cabinet.is-open .cabinet-hint {
+  opacity: 0;
+}
+
+/* six half-columns: each folder spans two, and the last row's pair sits centred */
+.folders {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(16px, 2.2vw, 28px) clamp(14px, 2vw, 26px);
+}
+.folder {
+  grid-column: span 2;
+  position: relative; /* no z-index or transform, so its layers share the cabinet's stacking context */
+  height: var(--folder-h);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+.folder:nth-child(7) {
+  grid-column: 2 / span 2;
+}
+.folder:nth-child(8) {
+  grid-column: 4 / span 2;
+}
+.folder:focus-visible {
+  outline: 2px solid var(--fc);
+  outline-offset: 4px;
+}
+.folder-back,
+.folder-front {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.35s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+.folder-back {
+  z-index: 1;
+}
+.folder-front {
+  z-index: 3;
+  transform-origin: 50% 98%;
+}
+.folder.held .folder-front {
+  z-index: 5; /* "held" stays on while the sheet sinks back in, so the flap keeps covering it */
+}
+.folder-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.folder-label {
+  position: absolute;
+  left: 7%;
+  right: 6%;
+  top: 48%;
+  font: 500 clamp(11px, 1vw, 13px) / 1.2 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.folder-count {
+  position: absolute;
+  left: 7%;
+  bottom: 10%;
+  font: 400 11px var(--mono);
+  color: var(--muted);
+}
+
+/* hover lift, and the open folder's flap tips forward */
+.folder:hover .folder-back,
+.folder:hover .folder-front {
+  transform: translateY(-3px);
+}
+.folder.open .folder-back {
+  transform: translateY(-6px);
+}
+.folder.open .folder-front {
+  transform: translateY(-2px) perspective(600px) rotateX(-30deg);
+}
+
+/* positioned over the open folder by Skills.tsx; it clips the sheet at the folder's middle */
+.sheet-slot {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  overflow: hidden;
+  pointer-events: none; /* clicks pass through to a covered folder */
+}
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px 16px 30px 46px;
+  border-radius: 4px 4px 0 0;
+  /* ruled notepad paper with a margin line */
+  background:
+    linear-gradient(90deg, transparent 34px, var(--fc) 34px, var(--fc) 35.5px, transparent 35.5px),
+    repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule) 31px 32px),
+    var(--sheet);
+  background-position: 0 0, 0 12px, 0 0;
+  box-shadow: 0 -4px 22px var(--shadow);
+  transform-origin: 50% 100%;
+  animation: sheet-rise 0.5s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+/* closing: the sheet slides back down into its folder */
+.sheet.away {
+  animation: sheet-sink 0.35s cubic-bezier(0.5, 0, 0.75, 0.2) forwards;
+}
+@keyframes sheet-sink {
+  from {
+    transform: translateY(0) rotate(-1deg);
+  }
+  to {
+    transform: translateY(104%) rotate(0deg);
+  }
+}
+@keyframes sheet-rise {
+  from {
+    transform: translateY(104%) rotate(0deg);
+  }
+  to {
+    transform: translateY(0) rotate(-1deg);
+  }
+}
+.sheet-title {
+  margin: 0 0 6px;
+  font-family: var(--hand);
+  font-size: 17px;
+  line-height: 32px;
+  color: var(--fc);
+}
+.sheet-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sheet-list.two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 12px;
+}
+.sheet-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  min-width: 0;
+  font-size: 15px;
+  color: var(--ink);
+  animation: sheet-item 0.35s ease-out both;
+  animation-delay: calc(0.18s + var(--d) * 0.05s);
+}
+.sheet-list li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sheet-list .skill-icon {
+  flex: none;
+  overflow: visible;
+}
+.sheet-list .skill-icon path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@keyframes sheet-item {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+}
+
+/* phones: smaller folders, and the sheet drops in below them instead */
+@media (max-width: 720px) {
+  .cabinet {
+    --folder-h: 92px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+  }
+  .folders {
+    order: 1;
+    gap: 18px 10px;
+  }
+  .folder-count {
+    display: none;
+  }
+  .cabinet-hint {
+    position: static;
+    order: 0;
+    margin-bottom: 18px;
+  }
+  .cabinet.is-open .cabinet-hint {
+    visibility: hidden;
+  }
+  .sheet.away {
+    display: none;
+  }
+  .folder-label {
+    font-size: 9.5px;
+    top: 44%;
+  }
+  .sheet-slot {
+    order: 2;
+    position: relative;
+    left: auto !important;
+    width: auto !important;
+    bottom: auto !important;
+    overflow: visible;
+    margin-top: 26px;
+  }
+  .sheet {
+    position: relative;
+    border-radius: 4px;
+    padding-bottom: 16px;
+    animation-name: sheet-drop;
+  }
+}
+@keyframes sheet-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) rotate(0deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-0.8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet,
+  .sheet-list li {
+    animation-duration: 0.01s;
+  }
+}
