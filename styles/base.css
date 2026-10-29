@@ -6,6 +6,10 @@
 }
 html {
   scroll-behavior: smooth;
+  /* the pen can poke past the screen edge while it draws; clip it so phones
+     never widen the page (which zooms it out and leaves a gap at the side).
+     "clip" rather than "hidden", so the pinned sections' position: sticky still works */
+  overflow-x: clip;
 }
 body {
   margin: 0;
@@ -15,6 +19,7 @@ body {
   font-size: 16px;
   line-height: 1.55;
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 html.intro body {

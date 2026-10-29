@@ -64,6 +64,7 @@ export function Journey() {
   const stopRefs = useRef<(HTMLElement | null)[]>([]);
   const trainRef = useRef<HTMLDivElement>(null);
   const centers = useRef<number[]>([]);
+    const halfStop = useRef(0); // half a station's width, so the camera never cuts a card off
   const lastX = useRef<number | null>(null);
   const movingTimer = useRef(0);
   const [sky, setSky] = useState<SkyData | null>(null);
@@ -72,6 +73,7 @@ export function Journey() {
   const onMeasure = (m: PinMetrics) => {
     const stops = stopRefs.current.filter(Boolean) as HTMLElement[];
     centers.current = stops.map((s) => s.offsetLeft + s.offsetWidth / 2);
+    halfStop.current = (stops[0]?.offsetWidth ?? 0) / 2;
     setSky(buildSky(m.track, stops, centers.current));
     setLive(true);
   };
@@ -88,8 +90,11 @@ export function Journey() {
     const e = f < 0.14 ? 0 : f > 0.86 ? 1 : easeInOutCubic((f - 0.14) / 0.72);
     const x = st[leg] + (st[leg + 1] - st[leg]) * e;
 
-    // the camera keeps the train about a third of the way across the screen
-    const camera = Math.min(m.distance, Math.max(0, x - m.sticky.clientWidth * 0.36));
+    // the camera keeps the train about a third of the way across the screen. On
+    // a phone a card is nearly as wide as the screen, so there the train sits far
+    // enough in for the whole card (centred on the train) to stay in view.
+    const anchor = Math.max(m.sticky.clientWidth * 0.36, halfStop.current + 16);
+    const camera = Math.min(m.distance, Math.max(0, x - anchor));
     m.track.style.transform = `translate3d(${(-camera).toFixed(1)}px,0,0)`;
     train.style.transform = `translate3d(${(x - camera - TRAIN_NOSE).toFixed(1)}px,0,0)`;
 

@@ -621,6 +621,32 @@
     grid-template-columns: 1fr;
   }
 }
+/* phones: project cards are taller than the screen, so they stack instead of sliding sideways */
+@media (max-width: 720px) {
+  .proj-sec .hsticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  .proj-sec .htrack {
+    flex-direction: column;
+    width: auto;
+    transform: none !important;
+  }
+  .proj-sec .pcard {
+    width: auto;
+  }
+  .proj-sec .hprog,
+  .proj-sec .only-wide {
+    display: none;
+  }
+}
+/* short phone screens: drop the railway's intro line so the station card has room */
+@media (max-width: 720px) and (max-height: 760px) {
+  .rail-sec .sec-head p {
+    display: none;
+  }
+}
 /* on shorter screens, trim the station cards so the sky landmarks keep their space */
 @media (max-height: 860px) {
   .stop-card .chips {

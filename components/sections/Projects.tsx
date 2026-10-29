@@ -16,6 +16,7 @@ export function Projects() {
   return (
     <PinnedScroll
       id="work"
+      className="proj-sec"
       header={
         <div className="hhead sec-head">
           <div>
@@ -26,7 +27,9 @@ export function Projects() {
               </SketchMark>
             </h2>
           </div>
-          <p>Things I owned from the first sketch to a working build. Keep scrolling and they slide past.</p>
+          <p>
+            Things I owned from the first sketch to a working build.<span className="only-wide"> Keep scrolling and they slide past.</span>
+          </p>
         </div>
       }
       after={
