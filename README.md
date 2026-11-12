@@ -4,8 +4,7 @@
 
 **A hand-drawn, animated personal site where a fountain pen writes the greeting, sketches the doodles and ink follows your cursor.**
 
-<!-- After deploying, replace the line below with your Vercel link, e.g. **[View the live site →](https://your-site.vercel.app)** -->
-**Live site:** _coming soon_
+<!-- After deploying, replace the line below with your Vercel link, e.g. **[View the live site →](https://khushi107.github.io/Portfolio/))**
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
