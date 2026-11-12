@@ -2,7 +2,7 @@
 
 # Khushi Modi · Portfolio
 
-**A hand-drawn, animated personal site where a fountain pen writes the greeting, sketches the doodles and ink follows your cursor.**
+**A hand-drawn, animated personal site where a fountain pen writes the greeting, sketches the doodles and ink follows your cursor.**-->
 
 <!-- After deploying, replace the line below with your Vercel link, e.g. **[View the live site →](https://khushi107.github.io/Portfolio/))**
 
